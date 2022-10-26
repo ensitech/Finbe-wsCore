@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="731f5fe9-9bad-42fd-850a-c994dae7db63" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="https://srvpbashare.mdaote.bepensa.local:443/SPFileUpload.svc?wsdl" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="SPFileUpload.xsd" MetadataType="Schema" ID="4cd37fcd-1c23-4e60-8696-92388f8da4ea" SourceId="1" SourceUrl="https://srvpbashare.mdaote.bepensa.local/SPFileUpload.svc?xsd=xsd1" />
+    <MetadataFile FileName="SPFileUpload1.xsd" MetadataType="Schema" ID="9c0b7b23-1fcc-4d57-a367-f4576f0e13a1" SourceId="1" SourceUrl="https://srvpbashare.mdaote.bepensa.local/SPFileUpload.svc?xsd=xsd0" />
+    <MetadataFile FileName="SPFileUpload2.xsd" MetadataType="Schema" ID="cc15de3d-777d-4b7f-b752-02bf670475e6" SourceId="1" SourceUrl="https://srvpbashare.mdaote.bepensa.local/SPFileUpload.svc?xsd=xsd3" />
+    <MetadataFile FileName="SPFileUpload3.xsd" MetadataType="Schema" ID="3b3f3cc5-fec9-4d83-ac69-d54802f12c15" SourceId="1" SourceUrl="https://srvpbashare.mdaote.bepensa.local/SPFileUpload.svc?xsd=xsd2" />
+    <MetadataFile FileName="SPFileUpload4.xsd" MetadataType="Schema" ID="a875aea0-a489-46f8-8ee0-db6495b2a160" SourceId="1" SourceUrl="https://srvpbashare.mdaote.bepensa.local/SPFileUpload.svc?xsd=xsd5" />
+    <MetadataFile FileName="SPFileUpload5.xsd" MetadataType="Schema" ID="3409cf36-2587-433f-a6d9-1444d99000bd" SourceId="1" SourceUrl="https://srvpbashare.mdaote.bepensa.local/SPFileUpload.svc?xsd=xsd4" />
+    <MetadataFile FileName="SPFileUpload6.xsd" MetadataType="Schema" ID="c4b96832-450d-4c28-9f01-cdbaeb44f4ea" SourceId="1" SourceUrl="https://srvpbashare.mdaote.bepensa.local/SPFileUpload.svc?xsd=xsd7" />
+    <MetadataFile FileName="SPFileUpload.wsdl" MetadataType="Wsdl" ID="aa4d1ec9-1199-4861-ac39-1ac042d615c5" SourceId="1" SourceUrl="https://srvpbashare.mdaote.bepensa.local/SPFileUpload.svc?wsdl" />
+    <MetadataFile FileName="SPFileUpload7.xsd" MetadataType="Schema" ID="f7039a17-58ba-478b-a1be-ef6b0dfd2f64" SourceId="1" SourceUrl="https://srvpbashare.mdaote.bepensa.local/SPFileUpload.svc?xsd=xsd6" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>
