@@ -49,6 +49,62 @@ namespace WebApiFinbeCore.Controllers
         }
 
         /// <summary>
+        /// Crear una solicitud
+        /// </summary>
+        /// <param name="solicitud"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("SolicitudV2")]
+        [SwaggerHeader("System", "Sistema a enviar la solicitud", null, true)]
+        [ResponseType(typeof(ApiResponse<SolicitudResponse>))]
+        [EnableCors(origins: "*", headers: "*", methods: "*")]
+        public HttpResponseMessage CrearSolicitudV2([FromBody] Solicitud solicitud)
+        {
+            try
+            {
+                if(!Request.Headers.Contains("System"))
+                {
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, "No se encuentra el encabezado System");
+                }
+
+                if (ModelState.IsValid)
+                {
+                    SolicitudResponse response = null;
+
+                    var system = Request.Headers.GetValues("System").First();
+
+                    switch (system)
+                    {
+                        case Sistemas.CRM:
+                            response = SolicitudesService.ProcesarSolicitud(solicitud);
+                            break;
+                        case Sistemas.IMX:
+                            response = new SolicitudResponse { Success = true, Respuesta = "IMX OK" };
+                            break;
+                        case Sistemas.QUANTO:
+                            response = new SolicitudResponse { Success = true, Respuesta = "QUANTO OK" };
+                            break;
+                        default:
+                            return Request.CreateResponse(HttpStatusCode.BadRequest, "Encabezado System no válido");
+                    }
+
+                    return Request.CreateResponse(HttpStatusCode.OK, response);
+                }
+                else
+                {
+                    var errors = string.Join(",", ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage + ":" + e.Exception?.Message).ToArray());
+                    SolicitudesService.GeneraBitacoraModelo(solicitud, errors);
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, errors);
+                }
+
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.InternalServerError, ex.Message);
+            }
+        }
+
+        /// <summary>
         /// Endpoint para asignar documentos a una solicitud de crédito
         /// </summary>
         /// <param name="documentoSolicitud"></param>

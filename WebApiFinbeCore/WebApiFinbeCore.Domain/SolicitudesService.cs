@@ -587,7 +587,7 @@ namespace WebApiFinbeCore.Domain
             var json = JsonConvert.SerializeObject(solicitud);
             Entity bitacora = new Entity("fib_bitacorasolicitudescredito");
             bitacora.Attributes.Add("fib_name", solicitud.Folio);
-            bitacora.Attributes.Add("fib_datosentrada", json);
+            bitacora.Attributes.Add("fib_datosentradamultiline", json);
             bitacora.Attributes.Add("fib_resultados", errors);
             var createResponse = service.Create(bitacora);
         }
@@ -691,7 +691,7 @@ namespace WebApiFinbeCore.Domain
             {
                 Entity bitacora = new Entity("fib_bitacorasolicitudescredito");
                 bitacora.Attributes.Add("fib_name", folio);
-                bitacora.Attributes.Add("fib_datosentrada", datosEntrada);
+                bitacora.Attributes.Add("fib_datosentradamultiline", datosEntrada);
                 bitacora.Attributes.Add("fib_tipoenvio", tipoEnvio);
                 var createResponse = service.Create(bitacora);
                 return new Guid(createResponse.ToString());
@@ -1042,7 +1042,12 @@ namespace WebApiFinbeCore.Domain
                 }
                 if (!string.IsNullOrEmpty(personaFisica.GiroOActividad))
                 {
-                    contact.Attributes.Add("fib_actividadeconomicapldid", new EntityReference("fib_actividadeconomicapld", personaFisica.ActividadId));
+                    var actividadID = ExisteActividadOGiro(personaFisica.GiroOActividad, service);
+                    if (actividadID != Guid.Empty)
+                    {
+                        contact.Attributes.Add("fib_actividadeconomicapldid", new EntityReference("fib_actividadeconomicapld", actividadID));
+                    }
+                    
                 }
                 //domicilio
                 LlenarDatosDomicilioPersonaFisica(contact, personaFisica.DomicilioFacturacion);
@@ -1052,6 +1057,44 @@ namespace WebApiFinbeCore.Domain
                 {
                     LlenarDatosDomicilioAdicionalPersonaFisica(contact, personaFisica.DomicilioOperativo);
                 }
+
+                if (personaFisica.Impuestos > 0)
+                {
+                    contact.Attributes.Add("fib_impuestosaplicables", new OptionSetValue(personaFisica.Impuestos));
+                }
+
+                if (!string.IsNullOrEmpty(personaFisica.FormaPago))
+                {
+                    var formaPagoGuid = FindEntityId("fib_formadepago", personaFisica.FormaPago, "fib_codigo", service);
+
+                    if (formaPagoGuid != null && formaPagoGuid != Guid.Empty)
+                    {
+                        contact.Attributes.Add("fib_formadepagoid", new EntityReference("fib_formadepago", formaPagoGuid));
+                    }
+                }
+
+                if (!string.IsNullOrEmpty(personaFisica.UsoComprobante))
+                {
+                    var usoComprobanteGuid = FindEntityId("fib_usocomprobante", personaFisica.UsoComprobante, "fib_codigo", service);
+
+                    if (usoComprobanteGuid != null && usoComprobanteGuid != Guid.Empty)
+                    {
+                        contact.Attributes.Add("fib_usocomprobanteid", new EntityReference("fib_usocomprobante", usoComprobanteGuid));
+                    }
+                }
+
+                if (!string.IsNullOrEmpty(personaFisica.RegimenFiscal))
+                {
+                    var regimenFiscalGuid = FindEntityId("fib_regimenfiscal", personaFisica.RegimenFiscal, "fib_codigo", service);
+
+                    if (regimenFiscalGuid != null && regimenFiscalGuid != Guid.Empty)
+                    {
+                        contact.Attributes.Add("fib_regimenfiscalid", new EntityReference("fib_regimenfiscal", regimenFiscalGuid));
+                    }
+                }
+
+                if (personaFisica.DomicilioFacturacion != null && !string.IsNullOrEmpty(personaFisica.CodigoPostalV4))
+                    contact.Attributes.Add("fib_codigopostalcfdi", personaFisica.CodigoPostalV4);
 
                 var createResponse = service.Create(contact);
 
@@ -1143,7 +1186,9 @@ namespace WebApiFinbeCore.Domain
                 }
                 if (!string.IsNullOrEmpty(personaFisica.GiroOActividad))
                 {
-                    contact.Attributes.Add("fib_actividadeconomicapldid", new EntityReference("fib_actividadeconomicapld", personaFisica.ActividadId));
+                    var actividadID = ExisteActividadOGiro(personaFisica.GiroOActividad, service);
+                    if (actividadID != Guid.Empty)
+                        contact.Attributes.Add("fib_actividadeconomicapldid", new EntityReference("fib_actividadeconomicapld", actividadID));
                 }
                 //domicilio
                 LlenarDatosDomicilioPersonaFisica(contact, personaFisica.DomicilioFacturacion);
@@ -1153,6 +1198,44 @@ namespace WebApiFinbeCore.Domain
                 {
                     LlenarDatosDomicilioAdicionalPersonaFisica(contact, personaFisica.DomicilioOperativo);
                 }
+
+                if (personaFisica.Impuestos > 0)
+                {
+                    contact.Attributes.Add("fib_impuestosaplicables", new OptionSetValue(personaFisica.Impuestos));
+                }
+
+                if (!string.IsNullOrEmpty(personaFisica.FormaPago))
+                {
+                    var formaPagoGuid = FindEntityId("fib_formadepago", personaFisica.FormaPago, "fib_codigo", service);
+
+                    if (formaPagoGuid != null && formaPagoGuid != Guid.Empty)
+                    {
+                        contact.Attributes.Add("fib_formadepagoid", new EntityReference("fib_formadepago", formaPagoGuid));
+                    }
+                }
+
+                if (!string.IsNullOrEmpty(personaFisica.UsoComprobante))
+                {
+                    var usoComprobanteGuid = FindEntityId("fib_usocomprobante", personaFisica.UsoComprobante, "fib_codigo", service);
+
+                    if (usoComprobanteGuid != null && usoComprobanteGuid != Guid.Empty)
+                    {
+                        contact.Attributes.Add("fib_usocomprobanteid", new EntityReference("fib_usocomprobante", usoComprobanteGuid));
+                    }
+                }
+
+                if (!string.IsNullOrEmpty(personaFisica.RegimenFiscal))
+                {
+                    var regimenFiscalGuid = FindEntityId("fib_regimenfiscal", personaFisica.RegimenFiscal, "fib_codigo", service);
+
+                    if (regimenFiscalGuid != null && regimenFiscalGuid != Guid.Empty)
+                    {
+                        contact.Attributes.Add("fib_regimenfiscalid", new EntityReference("fib_regimenfiscal", regimenFiscalGuid));
+                    }
+                }
+
+                if (personaFisica.DomicilioFacturacion != null && !string.IsNullOrEmpty(personaFisica.CodigoPostalV4))
+                    contact.Attributes.Add("fib_codigopostalcfdi", personaFisica.CodigoPostalV4);
 
                 var createResponse = service.Create(contact);
 
@@ -1358,7 +1441,11 @@ namespace WebApiFinbeCore.Domain
                 //account.Attributes.Add("fib_tipodepersonamoral", new OptionSetValue(1));
                 if (!string.IsNullOrEmpty(personaMoral.GiroOActividad))
                 {
-                    account.Attributes.Add("fib_actividadeconomicapldid", new EntityReference("fib_actividadeconomicapld", personaMoral.ActividadId));
+                    var actividadID = ExisteActividadOGiro(personaMoral.GiroOActividad, service);
+                    if (actividadID != Guid.Empty)
+                    {
+                        account.Attributes.Add("fib_actividadeconomicapldid", new EntityReference("fib_actividadeconomicapld", actividadID));
+                    }
                 }
                 //domicilio
                 LlenarDatosDomicilioPersonaMoral(account, personaMoral.DomicilioFacturacion);
@@ -1368,6 +1455,50 @@ namespace WebApiFinbeCore.Domain
                 {
                     LlenarDatosDomicilioAdicionalPersonaMoral(account, personaMoral.DomicilioOperativo);
                 }
+
+                if (!string.IsNullOrEmpty(personaMoral.RazonSocialV4))
+                {
+                    account.Attributes.Add("fib_razonsocialcfdi", personaMoral.RazonSocialV4);
+                }
+                
+                if (personaMoral.Impuestos > 0)
+                {
+                    account.Attributes.Add("fib_impuestoaplicable", new OptionSetValue(personaMoral.Impuestos));
+                }
+
+                if (!string.IsNullOrEmpty(personaMoral.FormaPago))
+                {
+                    var formaPagoGuid = FindEntityId("fib_formadepago", personaMoral.FormaPago, "fib_codigo", service);
+
+                    if (formaPagoGuid != null && formaPagoGuid != Guid.Empty)
+                    {
+                        account.Attributes.Add("fib_formadepagoid", new EntityReference("fib_formadepago", formaPagoGuid));
+                    }
+                }
+                
+
+                if (!string.IsNullOrEmpty(personaMoral.UsoComprobante))
+                {
+                    var usoComprobanteGuid = FindEntityId("fib_usocomprobante", personaMoral.UsoComprobante, "fib_codigo", service);
+
+                    if (usoComprobanteGuid != null && usoComprobanteGuid != Guid.Empty)
+                    {
+                        account.Attributes.Add("fib_usocomprobanteid", new EntityReference("fib_usocomprobante", usoComprobanteGuid));
+                    }
+                }
+
+                if (!string.IsNullOrEmpty(personaMoral.RegimenFiscal))
+                {
+                    var regimenFiscalGuid = FindEntityId("fib_regimenfiscal", personaMoral.RegimenFiscal, "fib_codigo", service);
+
+                    if (regimenFiscalGuid != null && regimenFiscalGuid != Guid.Empty)
+                    {
+                        account.Attributes.Add("fib_regimenfiscalid", new EntityReference("fib_regimenfiscal", regimenFiscalGuid));
+                    }
+                }
+
+                if (personaMoral.DomicilioFacturacion != null && !string.IsNullOrEmpty(personaMoral.CodigoPostalV4))
+                    account.Attributes.Add("fib_codigopostalcfdi", personaMoral.CodigoPostalV4);
 
                 var createResponse = service.Create(account);
 
@@ -1429,7 +1560,9 @@ namespace WebApiFinbeCore.Domain
                 //account.Attributes.Add("fib_tipodepersonamoral", new OptionSetValue(1));
                 if (!string.IsNullOrEmpty(personaMoral.GiroOActividad))
                 {
-                    account.Attributes.Add("fib_actividadeconomicapldid", new EntityReference("fib_actividadeconomicapld", personaMoral.ActividadId));
+                    var actividadID = ExisteActividadOGiro(personaMoral.GiroOActividad, service);
+                    if (actividadID != Guid.Empty)
+                        account.Attributes.Add("fib_actividadeconomicapldid", new EntityReference("fib_actividadeconomicapld", actividadID));
                 }
                 //domicilio
                 LlenarDatosDomicilioPersonaMoral(account, personaMoral.DomicilioFacturacion);
@@ -1439,6 +1572,49 @@ namespace WebApiFinbeCore.Domain
                 {
                     LlenarDatosDomicilioAdicionalPersonaMoral(account, personaMoral.DomicilioOperativo);
                 }
+
+                if (!string.IsNullOrEmpty(personaMoral.Nombre))
+                {
+                    account.Attributes.Add("fib_razonsocialcfdi", personaMoral.Nombre);
+                }
+
+                if (personaMoral.Impuestos > 0)
+                {
+                    account.Attributes.Add("fib_impuestoaplicable", new OptionSetValue(personaMoral.Impuestos));
+                }
+
+                if (!string.IsNullOrEmpty(personaMoral.FormaPago))
+                {
+                    var formaPagoGuid = FindEntityId("fib_formadepago", personaMoral.FormaPago, "fib_codigo", service);
+
+                    if (formaPagoGuid != null && formaPagoGuid != Guid.Empty)
+                    {
+                        account.Attributes.Add("fib_formadepagoid", new EntityReference("fib_formadepago", formaPagoGuid));
+                    }
+                }
+
+                if (!string.IsNullOrEmpty(personaMoral.UsoComprobante))
+                {
+                    var usoComprobanteGuid = FindEntityId("fib_usocomprobante", personaMoral.UsoComprobante, "fib_codigo", service);
+
+                    if (usoComprobanteGuid != null && usoComprobanteGuid != Guid.Empty)
+                    {
+                        account.Attributes.Add("fib_usocomprobanteid", new EntityReference("fib_usocomprobante", usoComprobanteGuid));
+                    }
+                }
+
+                if (!string.IsNullOrEmpty(personaMoral.RegimenFiscal))
+                {
+                    var regimenFiscalGuid = FindEntityId("fib_regimenfiscal", personaMoral.RegimenFiscal, "fib_codigo", service);
+
+                    if (regimenFiscalGuid != null && regimenFiscalGuid != Guid.Empty)
+                    {
+                        account.Attributes.Add("fib_regimenfiscalid", new EntityReference("fib_regimenfiscal", regimenFiscalGuid));
+                    }
+                }
+
+                if (personaMoral.DomicilioFacturacion != null && !string.IsNullOrEmpty(personaMoral.CodigoPostalV4))
+                    account.Attributes.Add("fib_codigopostalcfdi", personaMoral.CodigoPostalV4);
 
                 var createResponse = service.Create(account);
 
@@ -1989,11 +2165,7 @@ namespace WebApiFinbeCore.Domain
             {
                 //VALIDAR GIRO O ACTIVIDAD
                 var actividadID = ExisteActividadOGiro(personaFisica.GiroOActividad, service);
-                if (actividadID == Guid.Empty)
-                {
-                    mensajes += $"La actividad [{personaFisica.GiroOActividad}] no existe. ";
-                }
-                else
+                if (actividadID != Guid.Empty)
                 {
                     personaFisica.ActividadId = actividadID;
                 }
@@ -2110,11 +2282,7 @@ namespace WebApiFinbeCore.Domain
             {
                 //VALIDAR GIRO O ACTIVIDAD
                 var actividadID = ExisteActividadOGiro(personaFisica.GiroOActividad, service);
-                if (actividadID == Guid.Empty)
-                {
-                    mensajes += $"La actividad [{personaFisica.GiroOActividad}] no existe. ";
-                }
-                else
+                if (actividadID != Guid.Empty)
                 {
                     personaFisica.ActividadId = actividadID;
                 }
@@ -2249,11 +2417,7 @@ namespace WebApiFinbeCore.Domain
             {
                 //VALIDAR GIRO O ACTIVIDAD
                 var actividadID = ExisteActividadOGiro(personaMoral.GiroOActividad, service);
-                if (actividadID == Guid.Empty)
-                {
-                    mensajes += $"La actividad [{personaMoral.GiroOActividad}] no existe. ";
-                }
-                else
+                if (actividadID != Guid.Empty)
                 {
                     personaMoral.ActividadId = actividadID;
                 }
@@ -2315,11 +2479,7 @@ namespace WebApiFinbeCore.Domain
             {
                 //VALIDAR GIRO O ACTIVIDAD
                 var actividadID = ExisteActividadOGiro(personaMoral.GiroOActividad, service);
-                if (actividadID == Guid.Empty)
-                {
-                    mensajes += $"La actividad [{personaMoral.GiroOActividad}] no existe. ";
-                }
-                else
+                if (actividadID != Guid.Empty)
                 {
                     personaMoral.ActividadId = actividadID;
                 }
@@ -2846,7 +3006,7 @@ namespace WebApiFinbeCore.Domain
             }
             catch
             {
-                throw new ConectorCRMException("FB-CRM 4: Error al recuperar información del usuario");
+                throw new ConectorCRMException($"FB-CRM 4: Error al recuperar información de la entidad {entityName}");
             }
 
             return entityId;

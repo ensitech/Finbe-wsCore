@@ -22,6 +22,28 @@ namespace WebApiFinbeCore.Attributes
                 required = true,
                 description = "Api Key Autorizada"
             });
+
+            var customHeaderAttributes = apiDescription.ActionDescriptor.GetCustomAttributes<SwaggerHeaderAttribute>();
+
+            foreach (var customHeader in customHeaderAttributes)
+            {
+                var existingParam = operation.parameters.FirstOrDefault(p =>
+                p.@in == "header" && p.name == customHeader.HeaderName);
+                if (existingParam != null)
+                {
+                    operation.parameters.Remove(existingParam);
+                }
+
+                operation.parameters.Add(new Parameter
+                {
+                    name = customHeader.HeaderName,
+                    @in = "header",
+                    type = "string",
+                    required = customHeader.IsRequired,
+                    description = customHeader.Description,
+                    @default = customHeader.DefaultValue
+                });
+            }
         }
     }
 }

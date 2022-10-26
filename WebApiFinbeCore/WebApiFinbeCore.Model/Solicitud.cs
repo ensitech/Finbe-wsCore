@@ -112,6 +112,31 @@ namespace WebApiFinbeCore.Model
         /// </summary>
         public List<SolidarioObligado> SolidariosObligados { get; set; }
         #endregion
+
+        /// <summary>
+        /// Impuestos a aplicar
+        /// </summary>
+        public int Impuestos { get; set; }
+        /// <summary>
+        /// Forma de Pago
+        /// </summary>
+        public string FormaPago { get; set; }
+        /// <summary>
+        /// Uso de comprobante (CFDI)
+        /// </summary>
+        public string UsoComprobante { get; set; }
+        /// <summary>
+        /// Regimen Fiscal
+        /// </summary>
+        public string RegimenFiscal { get; set; }
+        /// <summary>
+        /// Razón Social CFDI 4.0
+        /// </summary>
+        public string RazonSocialV4 { get; set; }
+        /// <summary>
+        /// Código Postal CFDI 4.0
+        /// </summary>
+        public string CodigoPostalV4 { get; set; }
     }
 
     /// <summary>
@@ -188,6 +213,31 @@ namespace WebApiFinbeCore.Model
         /// </summary>
         public Domicilio DomicilioOperativo { get; set; }
         #endregion
+
+        /// <summary>
+        /// Impuestos a aplicar
+        /// </summary>
+        public int Impuestos { get; set; }
+        /// <summary>
+        /// Forma de Pago
+        /// </summary>
+        public string FormaPago { get; set; }
+        /// <summary>
+        /// Uso de comprobante (CFDI)
+        /// </summary>
+        public string UsoComprobante { get; set; }
+        /// <summary>
+        /// Regimen Fiscal
+        /// </summary>
+        public string RegimenFiscal { get; set; }
+        /// <summary>
+        /// Razón Social CFDI 4.0
+        /// </summary>
+        public string RazonSocialV4 { get; set; }
+        /// <summary>
+        /// Código Postal CFDI 4.0
+        /// </summary>
+        public string CodigoPostalV4 { get; set; }
     }
 
     /// <summary>
@@ -241,6 +291,7 @@ namespace WebApiFinbeCore.Model
         public string Pais { get; set; }*/
         [JsonIgnore]
         public DomicilioCodigoPostal DomicilioCodigoPostal { get; set; }
+        
     }
 
     /// <summary>
