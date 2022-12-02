@@ -595,6 +595,14 @@ namespace WebApiFinbeCore.Domain
                 request.Method = "POST";
                 request.ContentType = "application/json";
                 request.Accept = "application/json";
+                string json = JsonConvert.SerializeObject(solicitud);
+
+                using (var streamWriter = new StreamWriter(request.GetRequestStream()))
+                {
+                    streamWriter.Write(json);
+                    streamWriter.Flush();
+                    streamWriter.Close();
+                }
 
                 try
                 {
