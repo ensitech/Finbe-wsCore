@@ -518,6 +518,7 @@ namespace WebApiFinbeCore.Model
     {
         public string NumeroCuenta { get; set; }
         public string NombreORazonSocial { get; set; }
+        public string rfc { get; set; }
         [JsonIgnore]
         public Guid ClienteId { get; set; }
         [JsonIgnore]

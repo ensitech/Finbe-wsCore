@@ -406,7 +406,7 @@ namespace WebApiFinbeCore.Domain
             }
             catch (Exception ex)
             {
-                throw new Exception("FB-DL 2: Error al recuperar información del cliente " + noCliente);
+                throw new Exception("FB-DL 2: Error al recuperar información del cliente " + noCliente + ". Error: " + ex.Message);
             }
 
             return configuraciones;
@@ -419,8 +419,10 @@ namespace WebApiFinbeCore.Domain
                 meses = 1;
             else
                 meses = 2;
+            
+            var fecha = new DateTime(DateTime.Now.Year, DateTime.Now.Month, diaDeCorte);
+            fecha = fecha.AddMonths(meses);
 
-            var fecha = new DateTime(DateTime.Now.Year, DateTime.Now.Month + meses, diaDeCorte);
             if (fecha.AddMonths(plazo) > fechaVencimiento)
                 return false;
             else
@@ -1008,7 +1010,8 @@ namespace WebApiFinbeCore.Domain
                                     (result.AtributoColleccion("lastname").ToStringNull() != null ? (result.AtributoColleccion("lastname").ToString() + " ") : "") +
                                     (result.AtributoColleccion("fib_apellidomaterno").ToStringNull() != null ? (result.AtributoColleccion("fib_apellidomaterno").ToString() + " ") : ""),
                                 ClienteId = result.Id,
-                                PersonaFisica = true
+                                PersonaFisica = true,
+                                rfc = result.AtributoColleccion("fib_rfc").ToStringNull()
                             });
                         }
                     }
@@ -1024,7 +1027,8 @@ namespace WebApiFinbeCore.Domain
                                 NumeroCuenta = result.AtributoColleccion("accountnumber").ToStringNull(),
                                 NombreORazonSocial = result.AtributoColleccion("name").ToStringNull(),
                                 ClienteId = result.Id,
-                                PersonaFisica = false
+                                PersonaFisica = false,
+                                rfc = result.AtributoColleccion("fib_rfc").ToStringNull()
                             });
                         }
                     }
