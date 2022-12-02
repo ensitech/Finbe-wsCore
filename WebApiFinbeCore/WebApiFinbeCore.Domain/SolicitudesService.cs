@@ -590,7 +590,7 @@ namespace WebApiFinbeCore.Domain
             try
             {
                 var url_base = ConfigurationManager.AppSettings["API_FACT"];
-                string URL = String.Format("{0}/create_imx");
+                string URL = String.Format("{0}/create_imx", url_base);
                 var request = (HttpWebRequest)WebRequest.Create(URL);
                 request.Method = "POST";
                 request.ContentType = "application/json";
