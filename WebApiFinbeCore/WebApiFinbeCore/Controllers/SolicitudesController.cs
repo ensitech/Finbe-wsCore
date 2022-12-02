@@ -79,7 +79,7 @@ namespace WebApiFinbeCore.Controllers
                             response = SolicitudesService.ProcesarSolicitud(solicitud);
                             break;
                         case Sistemas.IMX:
-                            response = new SolicitudResponse { Success = true, Respuesta = "IMX OK" };
+                            response = SolicitudesService.ProcesarSolicitudIMX(solicitud);
                             break;
                         case Sistemas.QUANTO:
                             response = new SolicitudResponse { Success = true, Respuesta = "QUANTO OK" };

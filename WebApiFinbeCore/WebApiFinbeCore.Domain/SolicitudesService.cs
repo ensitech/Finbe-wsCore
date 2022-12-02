@@ -20,6 +20,7 @@ using System.ServiceModel.Description;
 using System.ServiceModel.Channels;
 using System.ServiceModel.Dispatcher;
 using System.Web.Hosting;
+using System.IO;
 
 namespace WebApiFinbeCore.Domain
 {
@@ -578,6 +579,45 @@ namespace WebApiFinbeCore.Domain
                 response.Respuesta = ex.Message + " " + mensajes;
             }
 
+            return response;
+        }
+
+        public static SolicitudResponse ProcesarSolicitudIMX(Solicitud solicitud)
+        {
+            var response = new SolicitudResponse();
+            response.Success = true;
+            response.Respuesta = "Respuesta IMX";
+            try
+            {
+                var url_base = ConfigurationManager.AppSettings["API_FACT"];
+                string URL = String.Format("{0}/create_imx");
+                var request = (HttpWebRequest)WebRequest.Create(URL);
+                request.Method = "POST";
+                request.ContentType = "application/json";
+                request.Accept = "application/json";
+
+                try
+                {
+                    using (WebResponse web_response = request.GetResponse())
+                    {
+                        using (Stream strReader = web_response.GetResponseStream())
+                        {
+                            if (strReader == null) response.Success = false;
+                            using (StreamReader objReader = new StreamReader(strReader))
+                            {
+                                string responseBody = objReader.ReadToEnd();
+                            }
+                        }
+                    }
+                }
+                catch (WebException ex)
+                {
+                    response.Success = false;
+                }
+            } catch(Exception e)
+            {
+                response.Success = false;
+            }
             return response;
         }
 

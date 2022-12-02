@@ -25,8 +25,24 @@ namespace WebApiFinbeCore.Model
         /// Promotor asignado a la solicitud
         /// </summary>
         public string Promotor { get; set; }
+
         /// <summary>
-        /// Persona solicitante puede ser fisica o moral
+        /// Socio fondeador
+        /// </summary>
+        public string SocioFondeador { get; set; }
+
+        /// <summary>
+        /// Activos
+        /// </summary>
+        public List<Activo> Activos { get; set; }
+
+        /// <summary>
+        /// Activos
+        /// </summary>
+        public Factura Factura { get; set; }
+
+        /// <summary>
+        /// Factura
         /// </summary>
         [Required]
         public PersonaEvaluada PersonaEvaluada {get;set;} //solicitante
@@ -35,6 +51,203 @@ namespace WebApiFinbeCore.Model
         /// </summary>
         [Required]
         public DetalleFinanciacion DetalleFinanciacion { get; set; } //detalle financiacion
+
+        //falta agregar dos nuevos objetos al request
+    }
+
+    /// <summary>
+    /// Activos
+    /// </summary>
+    public class Activo
+    {
+        /// <summary>
+        /// TipoActivo
+        /// </summary>
+        public string TipoActivo { get; set; }
+
+        /// <summary>
+        /// Descripcion
+        /// </summary>
+        public string Descripcion { get; set; }
+
+        /// <summary>
+        /// Categoria IVA
+        /// </summary>
+        public string CategoriaIVA { get; set; }
+
+        /// <summary>
+        /// Total Sin IVA
+        /// </summary>
+        public decimal TotalSinIVA { get; set; }
+
+        /// <summary>
+        /// Tipo Vehiculo
+        /// </summary>
+        public string TipoVehiculo { get; set; }
+
+        /// <summary>
+        /// Tipo Placas
+        /// </summary>
+        public string TipoPlacas { get; set; }
+
+        /// <summary>
+        /// Estado Circulacion
+        /// </summary>
+        public string EstadoCirculacion { get; set; }
+
+        /// <summary>
+        /// Descripcion Activo
+        /// </summary>
+        public string DescripcionActivo { get; set; }
+
+        /// <summary>
+        /// Marca
+        /// </summary>
+        public string Marca { get; set; }
+
+        /// <summary>
+        /// Modelo
+        /// </summary>
+        public string Modelo { get; set; }
+
+        /// <summary>
+        /// Color
+        /// </summary>
+        public string Color { get; set; }
+
+        /// <summary>
+        /// Bastidor
+        /// </summary>
+        public string Bastidor { get; set; }
+
+        /// <summary>
+        /// Numero Serie
+        /// </summary>
+        public string NumeroSerie { get; set; }
+
+        /// <summary>
+        /// Proveedor
+        /// </summary>
+        public string Proveedor { get; set; }
+
+        /// <summary>
+        /// Direccion Activo
+        /// </summary>
+        public string DireccionActivo { get; set; }
+
+        /// <summary>
+        /// Dirección Activo 2
+        /// </summary>
+        public string DirecciónActivo2 { get; set; }
+
+        /// <summary>
+        /// CódigoPostal
+        /// </summary>
+        public string CódigoPostal { get; set; }
+
+        /// <summary>
+        /// GPS
+        /// </summary>
+        public Gps GPS { get; set; }
+
+        /// <summary>
+        /// Ratificacion
+        /// </summary>
+        public Ratificacion Ratificacion { get; set; }
+
+        /// <summary>
+        /// Seguro
+        /// </summary>
+        public Seguro Seguro { get; set; }
+
+        /// <summary>
+        /// Activos
+        /// </summary>
+        public decimal MontoFinanciar { get; set; }
+    }
+
+    /// <summary>
+    /// Gps
+    /// </summary>
+    public class Gps
+    {
+        /// <summary>
+        /// Proveedor
+        /// </summary>
+        public string Proveedor { get; set; }
+
+        /// <summary>
+        /// Costo
+        /// </summary>
+        public int Costo { get; set; }
+    }
+
+    /// <summary>
+    /// Ratificacion
+    /// </summary>
+    public class Ratificacion
+    {
+        /// <summary>
+        /// Descrpcion
+        /// </summary>
+        public string Descrpcion { get; set; }
+
+        /// <summary>
+        /// Costo
+        /// </summary>
+        public int Costo { get; set; }
+    }
+
+    /// <summary>
+    /// Seguro
+    /// </summary>
+    public class Seguro
+    {
+        /// <summary>
+        /// NombreTipo
+        /// </summary>
+        public string NombreTipo { get; set; }
+
+        /// <summary>
+        /// Plazo
+        /// </summary>
+        public int Plazo { get; set; }
+
+        /// <summary>
+        /// Costo
+        /// </summary>
+        public decimal Costo { get; set; }
+    }
+
+    /// <summary>
+    /// Factura
+    /// </summary>
+    public class Factura
+    {
+        // <summary>
+        /// Factura
+        /// </summary>
+        public string NumeroFactura { get; set; }
+
+        // <summary>
+        /// FechaVencimiento
+        /// </summary>
+        public string FechaVencimiento { get; set; }
+
+        // <summary>
+        /// Banco
+        /// </summary>
+        public string Banco { get; set; }
+
+        // <summary>
+        /// UUID
+        /// </summary>
+        public string UUID { get; set; }
+
+        // <summary>
+        /// Importe
+        /// </summary>
+        public decimal Importe { get; set; }
     }
 
     /// <summary>
@@ -57,6 +270,10 @@ namespace WebApiFinbeCore.Model
         /// Razon Social
         /// </summary>
         public string RazonSocial { get; set; }
+        /// <summary>
+        /// Forma Juridica
+        /// </summary>
+        public string FormaJuridica { get; set; }
 
         #endregion
 
@@ -137,6 +354,128 @@ namespace WebApiFinbeCore.Model
         /// Código Postal CFDI 4.0
         /// </summary>
         public string CodigoPostalV4 { get; set; }
+
+        /// <summary>
+        /// ContactoGPS
+        /// </summary>
+        public ContactoGPS ContactoGPS { get; set; }
+
+        /// <summary>
+        /// Banco
+        /// </summary>
+        public Banco Banco { get; set; }
+    }
+
+    /// <summary>
+    /// ContactoGPS
+    /// </summary>
+    public class ContactoGPS
+    {
+        /// <summary>
+        /// RFC
+        /// </summary>
+        public string RFC { get; set; }
+
+        /// <summary>
+        /// TipoPersona
+        /// </summary>
+        public string TipoPersona { get; set; }
+
+        /// <summary>
+        /// EmailPFE
+        /// </summary>
+        public string EmailPFE { get; set; }
+
+        /// <summary>
+        /// TelefonoMovil
+        /// </summary>
+        public string TelefonoMovil { get; set; }
+
+        /// <summary>
+        /// TelefonoOficina
+        /// </summary>
+        public string TelefonoOficina { get; set; }
+
+        /// <summary>
+        /// EmailFacturacion
+        /// </summary>
+        public string EmailFacturacion { get; set; }
+
+        /// <summary>
+        /// TelefonoCobranza1
+        /// </summary>
+        public string TelefonoCobranza1 { get; set; }
+
+        /// <summary>
+        /// TelefonoCobranza2
+        /// </summary>
+        public string TelefonoCobranza2 { get; set; }
+
+        /// <summary>
+        /// Genero
+        /// </summary>
+        public int Genero { get; set; }
+
+        /// <summary>
+        /// Nombres
+        /// </summary>
+        public string Nombres { get; set; }
+
+        /// <summary>
+        /// ApellidoPaterno
+        /// </summary>
+        public string ApellidoPaterno { get; set; }
+
+        /// <summary>
+        /// ApellidoMaterno
+        /// </summary>
+        public string ApellidoMaterno { get; set; }
+
+        /// <summary>
+        /// FechaNacimiento
+        /// </summary>
+        public string FechaNacimiento { get; set; }
+
+        /// <summary>
+        /// Nacionalidad
+        /// </summary>
+        public int Nacionalidad { get; set; }
+
+        /// <summary>
+        /// Profesion
+        /// </summary>
+        public int Profesion { get; set; }
+
+        /// <summary>
+        /// EstadoCivil
+        /// </summary>
+        public int EstadoCivil { get; set; }
+    }
+
+    /// <summary>
+    /// Banco
+    /// </summary>
+    public class Banco
+    {
+        /// <summary>
+        /// CodigoBanco
+        /// </summary>
+        public string CodigoBanco { get; set; }
+
+        /// <summary>
+        /// CodigoSucursal
+        /// </summary>
+        public string CodigoSucursal { get; set; }
+
+        /// <summary>
+        /// Cuenta
+        /// </summary>
+        public string Cuenta { get; set; }
+
+        /// <summary>
+        /// CLABE
+        /// </summary>
+        public string CLABE { get; set; }
     }
 
     /// <summary>
@@ -291,7 +630,19 @@ namespace WebApiFinbeCore.Model
         public string Pais { get; set; }*/
         [JsonIgnore]
         public DomicilioCodigoPostal DomicilioCodigoPostal { get; set; }
-        
+        /// <summary>
+        /// Municipio
+        /// </summary>
+        public string Municipio { get; set; }
+        /// <summary>
+        /// Estado
+        /// </summary>
+        public string Estado { get; set; }
+        /// <summary>
+        /// Pais
+        /// </summary>
+        public string Pais { get; set; }
+
     }
 
     /// <summary>
@@ -353,6 +704,10 @@ namespace WebApiFinbeCore.Model
         /// </summary>
         public string NombreLargo { get; set; }
 
+        /// <summary>
+        /// Codigo SCIAN
+        /// </summary>
+        public string CodigoSCIAN { get; set; }
         #endregion
     }
 
@@ -416,9 +771,25 @@ namespace WebApiFinbeCore.Model
         [Required]
         public int Plazo { get; set; }
         /// <summary>
+        /// Tasa Nominal
+        /// </summary>
+        public decimal TasaNominal { get; set; }
+        /// <summary>
         /// Fecha de Inicio
         /// </summary>
         public string FechaInicio { get; set; }
+        /// <summary>
+        /// Red
+        /// </summary>
+        public string Red { get; set; }
+        /// <summary>
+        /// Gastos Administativos
+        /// </summary>
+        public decimal GastosAdministativos { get; set; }
+        /// <summary>
+        /// Cuota Conversion
+        /// </summary>
+        public decimal CuotaConversion { get; set; }
     }
 
     public class ValorLista
