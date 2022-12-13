@@ -21,6 +21,7 @@ using System.ServiceModel.Channels;
 using System.ServiceModel.Dispatcher;
 using System.Web.Hosting;
 using System.IO;
+using RestSharp;
 
 namespace WebApiFinbeCore.Domain
 {
@@ -590,39 +591,11 @@ namespace WebApiFinbeCore.Domain
             try
             {
                 var url_base = ConfigurationManager.AppSettings["API_FACT"];
-                string URL = String.Format("{0}/create_imx", url_base);
-                var request = (HttpWebRequest)WebRequest.Create(URL);
-                request.Method = "POST";
-                request.ContentType = "application/json";
-                request.Accept = "application/json";
-                string json = JsonConvert.SerializeObject(solicitud);
-
-                using (var streamWriter = new StreamWriter(request.GetRequestStream()))
-                {
-                    streamWriter.Write(json);
-                    streamWriter.Flush();
-                    streamWriter.Close();
-                }
-
-                try
-                {
-                    using (WebResponse web_response = request.GetResponse())
-                    {
-                        using (Stream strReader = web_response.GetResponseStream())
-                        {
-                            if (strReader == null) response.Success = false;
-                            using (StreamReader objReader = new StreamReader(strReader))
-                            {
-                                string responseBody = objReader.ReadToEnd();
-                                response.Respuesta = responseBody;
-                            }
-                        }
-                    }
-                }
-                catch (WebException ex)
-                {
-                    response.Success = false;
-                }
+                var client = new RestClient(url_base);
+                var request = new RestRequest("create_imx", Method.POST);
+                request.AddJsonBody(solicitud);
+                var clientResponse = client.Execute(request);
+                response.Respuesta = clientResponse.Content.ToString();
             } catch(Exception e)
             {
                 response.Success = false;
