@@ -614,6 +614,7 @@ namespace WebApiFinbeCore.Domain
                             using (StreamReader objReader = new StreamReader(strReader))
                             {
                                 string responseBody = objReader.ReadToEnd();
+                                response.Respuesta = responseBody;
                             }
                         }
                     }
