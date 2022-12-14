@@ -22,6 +22,7 @@ using System.ServiceModel.Dispatcher;
 using System.Web.Hosting;
 using System.IO;
 using RestSharp;
+using System.Security.Authentication;
 
 namespace WebApiFinbeCore.Domain
 {
@@ -585,21 +586,35 @@ namespace WebApiFinbeCore.Domain
 
         public static SolicitudResponse ProcesarSolicitudIMX(Solicitud solicitud)
         {
-            var response = new SolicitudResponse();
-            response.Success = true;
-            response.Respuesta = "Respuesta IMX";
-            try
+            var response = new SolicitudResponse { Success = true };
+            
+            var url_base = ConfigurationManager.AppSettings["API_FACT"];
+
+            const SslProtocols _Tls12 = (SslProtocols)0x00000C00;
+            const SecurityProtocolType Tls12 = (SecurityProtocolType)_Tls12;
+            ServicePointManager.SecurityProtocol = Tls12;
+
+            var client = new RestClient(url_base);
+            var request = new RestRequest("create_imx", Method.POST);
+            request.AddJsonBody(solicitud);
+            var clientResponse = client.Execute(request);
+            if (clientResponse.StatusCode == HttpStatusCode.OK)
             {
-                var url_base = ConfigurationManager.AppSettings["API_FACT"];
-                var client = new RestClient(url_base);
-                var request = new RestRequest("create_imx", Method.POST);
-                request.AddJsonBody(solicitud);
-                var clientResponse = client.Execute(request);
                 response.Respuesta = clientResponse.Content.ToString();
-            } catch(Exception e)
-            {
-                response.Success = false;
             }
+            else
+            {
+                if (clientResponse.ErrorException != null)
+                {
+                    throw clientResponse.ErrorException;
+                }
+                else
+                {
+                    throw new Exception("Error al consumir el servicio API FACT. "
+                    + (!string.IsNullOrEmpty(clientResponse.ErrorMessage) ? clientResponse.ErrorMessage : string.Empty));
+                }
+            }
+            
             return response;
         }
 

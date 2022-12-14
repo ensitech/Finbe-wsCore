@@ -100,7 +100,7 @@ namespace WebApiFinbeCore.Controllers
             }
             catch (Exception ex)
             {
-                return Request.CreateResponse(HttpStatusCode.InternalServerError, ex.Message);
+                return Request.CreateResponse(HttpStatusCode.InternalServerError, string.Join(" ", ex.Messages()));
             }
         }
 
