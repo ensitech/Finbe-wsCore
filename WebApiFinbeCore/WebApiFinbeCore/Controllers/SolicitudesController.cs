@@ -57,6 +57,7 @@ namespace WebApiFinbeCore.Controllers
         [Route("SolicitudV2")]
         [SwaggerHeader("System", "Sistema a enviar la solicitud", null, true)]
         [ResponseType(typeof(ApiResponse<SolicitudResponse>))]
+        [ResponseType(typeof(IMXSolicitudResponse))]
         [EnableCors(origins: "*", headers: "*", methods: "*")]
         public HttpResponseMessage CrearSolicitudV2([FromBody] Solicitud solicitud)
         {
@@ -76,11 +77,9 @@ namespace WebApiFinbeCore.Controllers
                     switch (system)
                     {
                         case Sistemas.CRM:
-                            response = SolicitudesService.ProcesarSolicitud(solicitud);
-                            break;
+                            return Request.CreateResponse(HttpStatusCode.OK, SolicitudesService.ProcesarSolicitud(solicitud));
                         case Sistemas.IMX:
-                            response = SolicitudesService.ProcesarSolicitudIMX(solicitud);
-                            break;
+                            return Request.CreateResponse(HttpStatusCode.OK, SolicitudesService.ProcesarSolicitudIMX(solicitud));
                         case Sistemas.QUANTO:
                             response = new SolicitudResponse { Success = true, Respuesta = "QUANTO OK" };
                             break;

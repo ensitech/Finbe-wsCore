@@ -807,6 +807,16 @@ namespace WebApiFinbeCore.Model
         public bool Success { get; set; }
     }
 
+    public class IMXSolicitudResponse
+    {
+        public string Contrato { get; set; }
+        public string Solicitud { get; set; }
+        public string Cliente { get; set; }
+        public List<string> Avales { get; set; }
+        public bool Exito { get; set; }
+        public string Mensaje { get; set; }
+    }
+
     public class Persona
     {
         public Guid Id { get; set; }

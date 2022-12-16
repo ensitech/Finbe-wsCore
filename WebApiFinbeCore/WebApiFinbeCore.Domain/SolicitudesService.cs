@@ -584,10 +584,8 @@ namespace WebApiFinbeCore.Domain
             return response;
         }
 
-        public static SolicitudResponse ProcesarSolicitudIMX(Solicitud solicitud)
+        public static IMXSolicitudResponse ProcesarSolicitudIMX(Solicitud solicitud)
         {
-            var response = new SolicitudResponse { Success = true };
-            
             var url_base = ConfigurationManager.AppSettings["API_FACT"];
 
             const SslProtocols _Tls12 = (SslProtocols)0x00000C00;
@@ -600,7 +598,7 @@ namespace WebApiFinbeCore.Domain
             var clientResponse = client.Execute(request);
             if (clientResponse.StatusCode == HttpStatusCode.OK)
             {
-                response.Respuesta = clientResponse.Content.ToString();
+                return JsonConvert.DeserializeObject<IMXSolicitudResponse>(clientResponse.Content);
             }
             else
             {
@@ -614,8 +612,6 @@ namespace WebApiFinbeCore.Domain
                     + (!string.IsNullOrEmpty(clientResponse.ErrorMessage) ? clientResponse.ErrorMessage : string.Empty));
                 }
             }
-            
-            return response;
         }
 
         public static void GeneraBitacoraModelo(Solicitud solicitud, string errors)
