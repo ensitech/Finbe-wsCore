@@ -593,7 +593,9 @@ namespace WebApiFinbeCore.Domain
             ServicePointManager.SecurityProtocol = Tls12;
 
             var client = new RestClient(url_base);
+            client.Timeout = 300000;
             var request = new RestRequest("create_imx", Method.POST);
+            request.Timeout = 300000;
             request.AddJsonBody(solicitud);
             var clientResponse = client.Execute(request);
             if (clientResponse.StatusCode == HttpStatusCode.OK)

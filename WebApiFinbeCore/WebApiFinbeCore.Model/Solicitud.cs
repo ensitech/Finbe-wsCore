@@ -128,7 +128,7 @@ namespace WebApiFinbeCore.Model
         /// <summary>
         /// Proveedor
         /// </summary>
-        public string Proveedor { get; set; }
+        public Proveedor Proveedor { get; set; }
 
         /// <summary>
         /// Direccion Activo
@@ -937,5 +937,68 @@ namespace WebApiFinbeCore.Model
         /// </summary>
         [Required]
         public DetalleFinanciacion DetalleFinanciacion { get; set; }
+    }
+
+    /// <summary>
+    /// Proveedor
+    /// </summary>
+    public class Proveedor
+    {
+        /// <summary>
+        /// Tipo de Persona
+        /// </summary>
+        public string TipoPersona { get; set; }
+        /// <summary>
+        /// RFC
+        /// </summary>
+        public string RFC { get; set; }
+        /// <summary>
+        /// Razón Social
+        /// </summary>
+        public string RazonSocial { get; set; }
+        /// <summary>
+        /// Forma Juridica
+        /// </summary>
+        public string FormaJuridica { get; set; }
+        /// <summary>
+        /// EmailPFE
+        /// </summary>
+        public string EmailPFE { get; set; }
+        /// <summary>
+        /// Teléfono Móvil
+        /// </summary>
+        public string TelefonoMovil { get; set; }
+        /// <summary>
+        /// Teléfono Oficina
+        /// </summary>
+        public string TelefonoOficina { get; set; }
+        /// <summary>
+        /// Email Facturación
+        /// </summary>
+        public string EmailFacturacion { get; set; }
+        /// <summary>
+        /// Domicilio Facturación
+        /// </summary>
+        public Domicilio DomicilioFacturacion { get; set; }
+        /// <summary>
+        /// Género
+        /// </summary>
+        public int Genero { get; set; }
+        /// <summary>
+        /// Nombres
+        /// </summary>
+        public string Nombres { get; set; }
+        /// <summary>
+        /// Apellido Paterno
+        /// </summary>
+        public string ApellidoPaterno { get; set; }
+        /// <summary>
+        /// Apellido Materno
+        /// </summary>
+        public string ApellidoMaterno { get; set; }
+        /// <summary>
+        /// CLABE
+        /// </summary>
+        public string CLABE { get; set; }
     }
 }
