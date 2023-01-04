@@ -179,7 +179,7 @@ namespace WebApiFinbeCore.Model
         /// <summary>
         /// Costo
         /// </summary>
-        public int Costo { get; set; }
+        public decimal Costo { get; set; }
     }
 
     /// <summary>
@@ -195,7 +195,7 @@ namespace WebApiFinbeCore.Model
         /// <summary>
         /// Costo
         /// </summary>
-        public int Costo { get; set; }
+        public decimal Costo { get; set; }
     }
 
     /// <summary>
